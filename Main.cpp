@@ -14,12 +14,27 @@ int main()
     void* Two = MM.Allocate(100);
     cout<<"\n**************************\n"<<endl;
     //MM.print_memory();
-    void* Three = MM.Allocate(50);
+    void* Three = MM.Allocate(40);
     cout<<"\n**************************\n"<<endl;
     //MM.print_memory();
     MM.Deallocate(Two);
+    cout<<"\n**************************\n"<<endl;
+
     MM.Deallocate(One);
-    void* Four = MM.Allocate(100);
+
+    cout<<"\n**************************\n"<<endl;
+
+
+    void* Four = MM.Allocate(200);
+
+    cout<<"\n**************************\n"<<endl;
+
+    void * Five = MM.Allocate(100);
+
+    cout<<"\n**************************\n"<<endl;
+
+    MM.Deallocate(Five);
+
     //MM.print_memory();
 
 }
