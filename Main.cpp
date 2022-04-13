@@ -7,7 +7,8 @@ using namespace Memory;
 
 int main()
 {
-    Memory_Management MM = Memory_Management(Next, 500);
+    Memory_Management MM = Memory_Management(Best, 500);
+    
     void* One = MM.Allocate(50);
     void* Two = MM.Allocate(100);
     //MM.print_memory();
