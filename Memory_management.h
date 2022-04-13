@@ -7,7 +7,7 @@ namespace Memory
 {
     enum Choice
     {
-        first = 1,
+        First = 1,
         Best = 2,
         Next = 3
     };
@@ -199,16 +199,19 @@ namespace Memory
                 //cout<<"1 : "<<Head<<endl;
                 //cout<<"2 : "<<Next<<endl;
                 //cout<<"Memory Block of Size : "<<Size<<" is Created"<<endl;
+                cout<<"\nContainer of Size : "<<Size<<" is created"<<endl;
+                this->Print_Linked_List(this->Head);
+
             }
 
 
             void* Allocate(size_t size)
             {
-                this->Print_Linked_List(this->Head);
-                cout<<"\nTrying to Allcoate memory for size : "<<size<<endl;
+                //this->Print_Linked_List(this->Head);
+                cout<<"\nTrying to Allocate memory for size : "<<size<<", using "<<this->choice<<" Startegy."<<endl;
                 Node* Block = NULL;
 
-                if(this->choice == first)
+                if(this->choice == First)
                 {
                     First_Fit Strat = First_Fit(this->Head, size);
                     Block = Strat.Apply_Strategy();
@@ -221,7 +224,7 @@ namespace Memory
                     //this->Print_Linked_List(this->Head);
                     Best_Fit Strat = Best_Fit(this->Head, size);
                     Block = Strat.Apply_Strategy();
-                    cout<<"\nApplying the Best Fit Strategy"<<endl;
+                    //cout<<"\nApplying the Best Fit Strategy"<<endl;
                 }
 
                 else
@@ -267,15 +270,16 @@ namespace Memory
                 cout<<"\nBlock of Size "<<size<<" is Created "<<endl;
                 //this->Print_Node(Block);
                 //cout<<this->Head->Size<<" , "<<this->Head->Location<<endl;
-                //this->Print_Linked_List(this->Head);
+                this->Print_Linked_List(this->Head);
                 
                 return Block->Location;
             }
 
             void Deallocate(void* node)
             {
-                cout<<"Memory Block is deleted"<<endl;
-                this->Print_Linked_List(this->Head);
+                
+
+                //this->Print_Linked_List(this->Head);
                 Node* Pointer = this->Head;
                 while(Pointer->Next != this->Head)
                 {
@@ -312,11 +316,14 @@ namespace Memory
                     
                     free(Node2);
                 }
+                cout<<"\nMemory Block is deleted"<<endl;
+
+                this->Print_Linked_List(this->Head);
             }
 
             void Print_Linked_List(Node* Head)
             {
-                cout<<"Printing the Linked List"<<endl;
+                cout<<"\nPrinting the Container status"<<endl;
                 int Count = 1;
                 while(true)
                 {
