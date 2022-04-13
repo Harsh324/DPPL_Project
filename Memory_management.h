@@ -94,6 +94,7 @@ namespace Memory
         public:
             Best_Fit(Node* Head, size_t Req_size)
             {
+                cout<<"In Best_Fit Constructor"<<endl;
                 this->Node1 = Head;
                 this->SIZE = Req_size;
                 this->head = Head;
@@ -101,15 +102,36 @@ namespace Memory
 
             Node* Apply_Strategy()
             {
-                while(Node1->Next != this->head)
+                //cout<<"Flag"<<endl;
+                //cout<<this->Node1<<endl;
+                //cout<<this->head<<endl;
+
+                while(true)
                 {
+                    cout<<"Trying Best While loop"<<endl;
                     if((Node1->Flag == 0) && (Node1->Size >= this->SIZE))
                     {
                         if(BEST == NULL || (Node1->Size < BEST->Size))
                             BEST = Node1;
                     }
                     Node1 = Node1->Next;
+                    if(Node1->Next == this->head)
+                    {
+                        cout<<"Breaking"<<endl;
+                        break;
+                    }
                 }
+                /*
+                while(Node1->Next != this->head)
+                {
+                    cout<<"Trying Best While loop"<<endl;
+                    if((Node1->Flag == 0) && (Node1->Size >= this->SIZE))
+                    {
+                        if(BEST == NULL || (Node1->Size < BEST->Size))
+                            BEST = Node1;
+                    }
+                    Node1 = Node1->Next;
+                }*/
                 return BEST;
             }
     };
@@ -131,6 +153,8 @@ namespace Memory
 
             Memory_Management(Choice Ch, size_t Size)
             {
+                cout<<"Memory Constructor created "<<endl;
+
                 this->choice = Ch;
                 this->Total_size = Size;
 
@@ -154,35 +178,44 @@ namespace Memory
 
                 Head->Next = Head;
                 Head->Prev = Head;
+                //cout<<"1 : "<<Head<<endl;
+                //cout<<"2 : "<<Next<<endl;
+                //cout<<"Memory Block of Size : "<<Size<<" is Created"<<endl;
             }
 
 
             void* Allocate(size_t size)
             {
+                this->Print_Linked_List(this->Head);
+                cout<<"Trying to Allcoate memory for size : "<<size<<endl;
                 Node* Block = NULL;
 
                 if(this->choice == first)
                 {
                     First_Fit Strat = First_Fit(this->Head, size);
                     Block = Strat.Apply_Strategy();
+                    //cout<<"Applying the First Fit Strategy"<<endl;
                 }
 
                 else if(this->choice == Best)
                 {
                     Best_Fit Strat = Best_Fit(this->Head, size);
                     Block = Strat.Apply_Strategy();
+                    //cout<<"Applying the Best Fit Strategy"<<endl;
                 }
 
                 else
                 {
                     Next_Fit Strat = Next_Fit(this->Next, size);
                     Block = Strat.Apply_Strategy();
+                    //cout<<"Applying the Next Fit Strategy"<<endl;
                 }
 
 
-                if(Block->Size > size)
+                if(Block->Size >= size)
                 {
                     // New node created
+                    cout<<"Block of Size "<<size<<" is Created "<<endl;
                     Node* New = (Node*)malloc(sizeof(Node));
 
                     // Insertion of new node
@@ -194,17 +227,25 @@ namespace Memory
                     New->Flag = 0;
                     New->Location = (int*)Block->Location + size;
                     Block->Size = size;
+                    cout<<"! "<<New<<endl;
+                    cout<<"! "<<Block<<endl;
                 }
                 else
+                {
+                    cout<<"In Else"<<endl;
                     this->Next = Block->Next;
+                }
 
                 Block->Flag = 1;
                 //cout<<this->Head->Size<<" , "<<this->Head->Location<<endl;
+                this->Print_Linked_List(this->Head);
+                
                 return Block->Location;
             }
 
             void Deallocate(void* node)
             {
+                cout<<"Memory Block is deleted"<<endl;
                 Node* Pointer = this->Head;
                 while(Pointer->Next != this->Head)
                 {
@@ -240,6 +281,18 @@ namespace Memory
                         this->Next = Pointer;
                     
                     free(Node2);
+                }
+            }
+
+            void Print_Linked_List(Node* Head)
+            {
+                cout<<"Printing the Linked List"<<endl;
+                while(true)
+                {
+                    cout<<"(Size : "<<Head->Size<<" , Flag : "<<Head->Flag<<" , Memory_Block : "<<Head->Location<<" )"<<endl;
+                    Head = Head->Next;
+                    if(Head == this->Head)
+                        break;
                 }
             }
 
