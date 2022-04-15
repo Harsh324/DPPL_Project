@@ -208,11 +208,12 @@ namespace Memory
             void* Allocate(size_t size)
             {
                 //this->Print_Linked_List(this->Head);
-                cout<<"\nTrying to Allocate memory for size : "<<size<<", using "<<this->choice<<" Startegy."<<endl;
+                
                 Node* Block = NULL;
 
                 if(this->choice == First)
                 {
+                    cout<<"\nTrying to Allocate memory for size : "<<size<<", using First Fit Startegy."<<endl;
                     First_Fit Strat = First_Fit(this->Head, size);
                     Block = Strat.Apply_Strategy();
                     //cout<<"Applying the First Fit Strategy"<<endl;
@@ -222,6 +223,7 @@ namespace Memory
                 {
                     //cout<<"Printing Head in Allocate"<<endl;
                     //this->Print_Linked_List(this->Head);
+                    cout<<"\nTrying to Allocate memory for size : "<<size<<", using Best Fit Startegy."<<endl;
                     Best_Fit Strat = Best_Fit(this->Head, size);
                     Block = Strat.Apply_Strategy();
                     //cout<<"\nApplying the Best Fit Strategy"<<endl;
@@ -229,6 +231,7 @@ namespace Memory
 
                 else
                 {
+                    cout<<"\nTrying to Allocate memory for size : "<<size<<", using Next Fit Startegy."<<endl;
                     Next_Fit Strat = Next_Fit(this->Next, size);
                     Block = Strat.Apply_Strategy();
                     //cout<<"Applying the Next Fit Strategy"<<endl;
