@@ -278,12 +278,21 @@ namespace Memory
                 return Block->Location;
             }
 
+
+
+            /**
+             * @brief This Method is used to free the given memory block
+             *        function argument is the memory Blaock that is to be deleted.
+             *        After Deletion of the Node, id Prev and Next Memory Block is free
+             *        then Both Bloxks are Combined.
+             * 
+             * @param node Parameter is of type Struct Node
+             */
             void Deallocate(void* node)
             {
-                
-
-                //this->Print_Linked_List(this->Head);
+                //Pointer to iterate through the Doubly Linked List
                 Node* Pointer = this->Head;
+
                 while(Pointer->Next != this->Head)
                 {
                     if(Pointer->Location == node)
@@ -291,6 +300,7 @@ namespace Memory
                     Pointer = Pointer->Next;
                 }
 
+                // Set the Pointer Flag = 0 means the Node is unallocated
                 Pointer->Flag = 0;
 
                 if(Head != Pointer && (Pointer->Prev->Flag == 0))
