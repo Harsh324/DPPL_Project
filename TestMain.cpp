@@ -4,11 +4,8 @@
 using namespace Lib;
 using namespace std;
 
-int main(int argc, char const *argv[])
+int main()
 {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-
     // Importing Big_Int Class from ".h" file to create object
     Big_int Big;
 
